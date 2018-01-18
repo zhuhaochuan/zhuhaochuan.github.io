@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>DP-Integer Break | zhc24</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言The best of nothing:这段时间在LeetCode上刷题，目前在看动态规划部分的题目，在这里对遇到的题目进行总结。遇到的题目越多积累的也就越多，学习算法的过程就是一个慢慢成长的过程。遇到的越多，收获越大。  题目如下 这道题我是按照填表法的基本思想去寻找状态转换的，对于输入的整数n而言，首先需要拆分成几个整数的和。这个拆分的过程有太多种拆分方式，首先要考虑拆分成多少个整数，每个">
+  <meta name="description" content="前言The best of nothing:这段时间在LeetCode上刷题，目前在看动态规划部分的题目。在这里对遇到的题目进行总结。遇到的题目越多积累的也就越多。学习算法的过程就是一个慢慢成长的过程。遇到的越多，收获越大。  题目如下 这道题我是按照填表法的基本思想去寻找状态转换的，对于输入的整数n而言，首先需要拆分成几个整数的和。这个拆分的过程有太多种拆分方式，首先要考虑拆分成多少个整数，每个">
 <meta name="keywords" content="动态规划">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DP-Integer Break">
 <meta property="og:url" content="http://yoursite.com/2018/01/18/DP-Integer-Break/index.html">
 <meta property="og:site_name" content="zhc24">
-<meta property="og:description" content="前言The best of nothing:这段时间在LeetCode上刷题，目前在看动态规划部分的题目，在这里对遇到的题目进行总结。遇到的题目越多积累的也就越多，学习算法的过程就是一个慢慢成长的过程。遇到的越多，收获越大。  题目如下 这道题我是按照填表法的基本思想去寻找状态转换的，对于输入的整数n而言，首先需要拆分成几个整数的和。这个拆分的过程有太多种拆分方式，首先要考虑拆分成多少个整数，每个">
+<meta property="og:description" content="前言The best of nothing:这段时间在LeetCode上刷题，目前在看动态规划部分的题目。在这里对遇到的题目进行总结。遇到的题目越多积累的也就越多。学习算法的过程就是一个慢慢成长的过程。遇到的越多，收获越大。  题目如下 这道题我是按照填表法的基本思想去寻找状态转换的，对于输入的整数n而言，首先需要拆分成几个整数的和。这个拆分的过程有太多种拆分方式，首先要考虑拆分成多少个整数，每个">
 <meta property="og:image" content="http://yoursite.com/pic/kbb.jpg">
 <meta property="og:image" content="http://yoursite.com/pic/Integer%20Break.png">
-<meta property="og:updated_time" content="2018-01-18T06:40:45.000Z">
+<meta property="og:updated_time" content="2018-01-18T06:41:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DP-Integer Break">
-<meta name="twitter:description" content="前言The best of nothing:这段时间在LeetCode上刷题，目前在看动态规划部分的题目，在这里对遇到的题目进行总结。遇到的题目越多积累的也就越多，学习算法的过程就是一个慢慢成长的过程。遇到的越多，收获越大。  题目如下 这道题我是按照填表法的基本思想去寻找状态转换的，对于输入的整数n而言，首先需要拆分成几个整数的和。这个拆分的过程有太多种拆分方式，首先要考虑拆分成多少个整数，每个">
+<meta name="twitter:description" content="前言The best of nothing:这段时间在LeetCode上刷题，目前在看动态规划部分的题目。在这里对遇到的题目进行总结。遇到的题目越多积累的也就越多。学习算法的过程就是一个慢慢成长的过程。遇到的越多，收获越大。  题目如下 这道题我是按照填表法的基本思想去寻找状态转换的，对于输入的整数n而言，首先需要拆分成几个整数的和。这个拆分的过程有太多种拆分方式，首先要考虑拆分成多少个整数，每个">
 <meta name="twitter:image" content="http://yoursite.com/pic/kbb.jpg">
   
     <link rel="alternative" href="/atom.xml" title="zhc24" type="application/atom+xml">
@@ -177,7 +177,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>The best of nothing:</strong><br>这段时间在LeetCode上刷题，目前在看动态规划部分的题目，在这里对遇到的题目进行总结。遇到的题目越多积累的也就越多，学习算法的过程就是一个慢慢成长的过程。遇到的越多，收获越大。<br><img src="/pic/kbb.jpg"></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>The best of nothing:</strong><br>这段时间在LeetCode上刷题，目前在看动态规划部分的题目。<br>在这里对遇到的题目进行总结。遇到的题目越多积累的也就越多。<br>学习算法的过程就是一个慢慢成长的过程。遇到的越多，收获越大。<br><img src="/pic/kbb.jpg"></p>
 <hr>
 <h2 id="题目如下"><a href="#题目如下" class="headerlink" title="题目如下"></a>题目如下</h2><p><img src="/pic/Integer Break.png"></p>
 <p>这道题我是按照填表法的基本思想去寻找状态转换的，对于输入的整数n而言，首先需要拆分成几个整数的和。这个拆分的过程有太多种拆分方式，首先要考虑拆分成多少个整数，每个整数各是多少合适，如果一一的去枚举所有的情况，<strong>太过于复杂</strong>！必然会超过题目的时间限制。</p>
