@@ -6,14 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/1 | zhc24</title>
+  <title>c++的局部变量全局变量地址分配 | zhc24</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="zhc24">
-<meta property="og:url" content="http://yoursite.com/archives/2018/01/index.html">
+  <meta name="description" content="##前言  对于每个变量地址的分配一直以来都很模糊， 对于很多的问题内存的分配方式将带来与我们 所想到的情形截然不同的结果。还有很多意料不到 的bug。  首先对于c++里的局域以及变量做个分类：  内存的分区：代码区，数据区，堆，栈。 四个区域司职不同，相互配合。 变量的分类以及初始化情况：局部变量，全局变量，静态的，非静态的。 C++里面又包括成员变量。  局部变量：编译器按照内存地址递减的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++的局部变量全局变量地址分配">
+<meta property="og:url" content="http://yoursite.com/2018/01/20/c-的局部变量全局变量地址分配/index.html">
 <meta property="og:site_name" content="zhc24">
+<meta property="og:description" content="##前言  对于每个变量地址的分配一直以来都很模糊， 对于很多的问题内存的分配方式将带来与我们 所想到的情形截然不同的结果。还有很多意料不到 的bug。  首先对于c++里的局域以及变量做个分类：  内存的分区：代码区，数据区，堆，栈。 四个区域司职不同，相互配合。 变量的分类以及初始化情况：局部变量，全局变量，静态的，非静态的。 C++里面又包括成员变量。  局部变量：编译器按照内存地址递减的">
+<meta property="og:image" content="http://yoursite.com/pic/塞尔达.jpeg">
+<meta property="og:updated_time" content="2018-01-20T12:21:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zhc24">
+<meta name="twitter:title" content="c++的局部变量全局变量地址分配">
+<meta name="twitter:description" content="##前言  对于每个变量地址的分配一直以来都很模糊， 对于很多的问题内存的分配方式将带来与我们 所想到的情形截然不同的结果。还有很多意料不到 的bug。  首先对于c++里的局域以及变量做个分类：  内存的分区：代码区，数据区，堆，栈。 四个区域司职不同，相互配合。 变量的分类以及初始化情况：局部变量，全局变量，静态的，非静态的。 C++里面又包括成员变量。  局部变量：编译器按照内存地址递减的">
+<meta name="twitter:image" content="http://yoursite.com/pic/塞尔达.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="zhc24" type="application/atom+xml">
   
@@ -149,163 +155,218 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-c-的局部变量全局变量地址分配" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      c++的局部变量全局变量地址分配
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/20/c-的局部变量全局变量地址分配/" class="archive-article-date">
+
+        
+        <a href="/2018/01/20/c-的局部变量全局变量地址分配/" class="archive-article-date">
   	<time datetime="2018-01-20T11:48:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-20</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/20/c-的局部变量全局变量地址分配/">c++的局部变量全局变量地址分配</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/pic/塞尔达.jpeg" width="800" height="400"></p>
+<p>##前言</p>
+<p> 对于每个变量地址的分配一直以来都很模糊，<br> 对于很多的问题内存的分配方式将带来与我们<br> 所想到的情形截然不同的结果。还有很多意料不到<br> 的bug。</p>
+<hr>
+<p><strong>首先对于c++里的局域以及变量做个分类：</strong></p>
+<ul>
+<li>内存的分区：代码区，数据区，堆，栈。 四个区域司职不同，相互配合。</li>
+<li>变量的分类以及初始化情况：局部变量，全局变量，静态的，非静态的。</li>
+<li>C++里面又包括成员变量。</li>
+</ul>
+<p><strong>局部变量：</strong><br>编译器按照内存地址<font color="blue" size="4">递减</font>的方式来给变量分配内存<br>用户栈的栈底是在<font color="blue" size="4">高地址</font> 栈顶指针是在<font color="blue" size="4">低地址</font><br>当有函数被调用数据进栈的时候 栈顶指针向下(向低地址)移动</p>
+<p>在局部变量分配空间的顺序跟变量的<font color="blue" size="4">声明顺序</font>直接相关，<br>同时按照内存由高到低的顺序进行空间分配。</p>
+<hr>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"iostream"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;&amp;i&lt;&lt;<span class="string">' '</span>&lt;&lt;&amp;j &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>i的地址高j的地址低且i先分配空间<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i,a[<span class="number">10</span>];</span><br><span class="line"> <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=<span class="number">10</span>;i++)</span><br><span class="line">  a[i]=<span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
+<p>对于这个代码 将会产生<font color="blue" size="4">死循环</font>。<br>首先一点for循环里的i是前面的i。因为并不是重新定义的局部变量所以就是外面的i<br>按照地址由高到低的分配，数组的地址随着下标的增加而增加，a[9]之后的四个字<br>节的地址其实是变量i的地址。当i=10 的时候 a[10]出现了地址的越界，这个地址就<br>会回i的地址，将a[10]=0，同时也就将i赋值为0，在这之后i依旧满足循环的条件，<br>这个循环将永远执行！</p>
+<hr>
+<p><strong>这就是栈内地址分配的规则带来的结果</strong>。<br>所以对于数组越界的影响应该更加的深刻、所以千万要注意数组越界带来的影响。</p>
+<p>全局变量的空间一般分配在数据区，因此并不像局部变量那样在函数被调用的时候才按照声明顺序由递减的方式分配空间，全局变量在编译阶段就会把空间分配完毕，这其中的机制根据编译器的优化以及操作系统的原理都有很大的不同。</p>
+<p>当所有的全局变量初始化为非零值时，空间分配按照声明顺序按空间递增进行分配。</p>
+<hr>
+<p>下面是一个对于局部变量地址分配的具体例子，以及一个对于数组这个数据结构的数组名的理解。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">3</span>] = &#123;&#125;;</span><br><span class="line">	<span class="keyword">int</span> b[<span class="number">3</span>] = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span> &lt;&lt; &amp;a &lt;&lt; <span class="built_in">endl</span> &lt;&lt; *a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">int</span>* c = a;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; b &lt;&lt; <span class="built_in">endl</span> &lt;&lt; &amp;b[<span class="number">2</span>]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span> &lt;&lt; &amp;c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*输出</span></span><br><span class="line"><span class="comment">0x28ff24</span></span><br><span class="line"><span class="comment">0x28ff24</span></span><br><span class="line"><span class="comment">0</span></span><br><span class="line"><span class="comment">0x28ff18</span></span><br><span class="line"><span class="comment">0x28ff20</span></span><br><span class="line"><span class="comment">0x28ff24</span></span><br><span class="line"><span class="comment">0x28ff14</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></p>
+<p><font color="DarkTurquoise" size="4">我们可以看出对于数组名取地址和数组名的值是一样的！</font><br>接下来使用&lt; typeinfo&gt;头文件里的typeid操作符输出数组名的类型：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;typeinfo&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">3</span>] = &#123;&#125;;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span> &lt;&lt; &amp;a &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">int</span>* c;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(a).name() &lt;&lt; <span class="built_in">endl</span> &lt;&lt; <span class="keyword">typeid</span>(&amp;a).name() &lt;&lt;  <span class="built_in">endl</span> &lt;&lt; <span class="keyword">typeid</span>(c).name()&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">输出</span></span><br><span class="line"><span class="comment">0x28ff14</span></span><br><span class="line"><span class="comment">0x28ff14</span></span><br><span class="line"><span class="comment">A3_i</span></span><br><span class="line"><span class="comment">PA3_i</span></span><br><span class="line"><span class="comment">Pi</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></p>
+<p><font color="DarkTurquoise" size="4">数组名的类型就是一个长度为3的整型数组而数组名的地址的类型是指向这个数组的指针类型，可见两者的类型是不一样的，并且对两者使用sizeof操作符得到的结果也是不一致的。</font><br>事实上，数组名类似一个指针，实际不是一个指针，他是数组这样一种数据结构。<br>现在到揭露数组名本质的时候了，先给出三个结论：</p>
+<ul>
+<li>(1)数组名的内涵在于其指代实体是一种<strong>数据结构</strong>，这种数据结构就是<strong>数组</strong>；    </li>
+<li>(2)数组名的外延在于其可以<strong>转换为</strong>指向其指代实体的指针，而且是一个<strong>指针常量</strong>； </li>
+<li>(3)指向数组的指针则是另外一种变量类型（在WIN32平台下，长度为4），仅仅意味着数组的存放地址！</li>
+<li>(4)数组名作为函数形参时，在函数体内，其失去了本身的内涵，仅仅只是一个指针,它还失去了其常量特性，可以作自增、自减等操作，可以被修改；</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">arrayTest</span><span class="params">(<span class="keyword">char</span> str[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     <span class="built_in">cout</span> &lt;&lt; <span class="string">"sizeof(str):"</span> &lt;&lt; <span class="keyword">sizeof</span>(str) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> str1[<span class="number">10</span>] = <span class="string">"I love U."</span>;</span><br><span class="line">    arrayTest(str1);</span><br><span class="line">    </span><br><span class="line">    system(<span class="string">"pause"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.cnblogs.com/wuzhenbo/archive/2012/05/29/2523777.html" target="_blank" rel="noopener">参考</a></p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢老铁<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/01/20/c-的局部变量全局变量地址分配/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/18/DP-Integer-Break/" class="archive-article-date">
-  	<time datetime="2018-01-18T04:15:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/18/DP-Integer-Break/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">DP-Integer Break</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/18/DP-Integer-Break/">DP-Integer Break</a>
-    </h1>
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="c-的局部变量全局变量地址分配" data-title="c++的局部变量全局变量地址分配" data-url="http://yoursite.com/2018/01/20/c-的局部变量全局变量地址分配/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">动态规划</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/18/Markdown-sublime的使用/" class="archive-article-date">
-  	<time datetime="2018-01-18T03:33:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/18/Markdown-sublime的使用/">Markdown+sublime的使用</a>
-    </h1>
+  <div id="SOHUCS" sid="c-的局部变量全局变量地址分配" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "true",
+        conf: "true"
+    });
+</script>
+</script>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">新篇</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/18/hello-world/" class="archive-article-date">
-  	<time datetime="2018-01-17T16:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/18/hello-world/">新的篇章开始</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">新篇</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -328,8 +389,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
