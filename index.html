@@ -151,6 +151,129 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2018-5-14" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/2018-5-14/">编译与链接理解</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/14/2018-5-14/" class="archive-article-date">
+  	<time datetime="2018-05-14T08:40:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="编译器上的build命令其实干了四件事："><a href="#编译器上的build命令其实干了四件事：" class="headerlink" title="编译器上的build命令其实干了四件事："></a>编译器上的build命令其实干了四件事：</h3><ul>
+<li>预处理 （文本文件-&gt;文件文件）</li>
+<li>编译 （文本文件-&gt;文本文件）</li>
+<li>汇编 （文本文件-&gt;二进制文件）</li>
+<li>链接</li>
+</ul>
+<blockquote>
+<p>文本文件：数字、字母等都用指定编码如ASCII码/UNICODE码等方式编码并存储的==二进制文==件。<br>二进制文件：编码格式==自由==的二进制文件。</p>
+</blockquote>
+<ul>
+<li>每个.==cpp==文件是一个编译单元，.h文件不是，编译器对每个编译单元分别处理。</li>
+</ul>
+<h4 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h4><ul>
+<li>展开==宏定义==：#define #undef</li>
+<li>处理==预编译==指令：#if #ifdef #ifndef #elif #else #endif</li>
+<li>==递归==处理头文件：#include</li>
+<li>删除注释</li>
+<li>添加行号和文件名标识别，用于debug</li>
+</ul>
+<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><blockquote>
+<p>前端（平台无关）<br>词法分析：形象点说就是扫描器，将字符识别为有意义的记号：关键字、标识符、字面量（数字、字符串）、操作符等，顺便将标示符放到符号表，数字、字符串放到文字表等，链接阶段要用。<br>语法分析：对每个表达式构造语法树-操作符在父节点上，左右操作数在左右孩子上。<br>语义分析：语法对不代表这句话有意义，不过这阶段只能做静态语义分析，给每个语法树节点标上类型，静态类型检查、类型转换等都是在这个阶段完成。<br>看完数学之美会知道，自然语言处理已经放弃了语义分析这些传统方法，转而采用统计学方法，一大原因就是自然语言是上下文相关的，而人类发明的高级语言是上下文无关的。<br>源代码优化：将语法树用 三地址码（ x = y OP z）等格式表达，容易做优化，优化的代码包括常量相加之类。<br>后端（平台相关）<br>汇编语言生成：将中间代码转化为汇编指令。<br>汇编指令优化：比如用移位代替乘法等。</p>
+</blockquote>
+<h4 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h4><blockquote>
+<p>这项工作比较简单，将汇编指令转化为机器指令，参考汇编指令与机器指令对照表一对一翻译。<br>最终获得的文件称为==可重定位或共享目标文件==。</p>
+</blockquote>
+<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul>
+<li>静态链接：==加载前==进行，各个编译单元生成可重定位目标文件（.a或者.obj）后，将它们组合成可执行文件。</li>
+<li>动态链接：==加载时==进行，对于共享目标文件（.so或者.dll），静态链接阶段不处理这些文件，只是在生成的可执行文件中添加.interp段、.dynamic和.dynsym等段，其中记录关于==动态链接器地址、依赖的共享目标文件与重定位信息和符号表==等信息。<blockquote>
+<p>注:加载的意思就是==创建进程，开始运行==之前</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>由于代码量的膨胀，需要分为不同==模块==进行开发，最后将互相依赖的模块组合，这是链接的目的。前文讲了静态链接，在程序加载之前生成一个可执行文件。但是静态链接也有明显的弊端：</li>
+<li>==浪费内存和磁盘空间==：任何一个可执行文件都需要拷贝使用到的目标文件。</li>
+<li>不利于程序的发布和更新：如果更新了程序，那么必须==重新获得可执行文件==。</li>
+<li>没有==插件功能==：不能够开放接口，将实现交给使用方自定义。</li>
+<li>兼容性较差：程序在不同平台运行时，不能动态选择依赖的链接库。</li>
+</ul>
+<blockquote>
+<p>动态链接的步骤：</p>
+</blockquote>
+<ul>
+<li>加载可执行文件和动态链接库到内存；</li>
+<li>将执行流程转到动态链接器（一段共享目标文件），其进行符号解析与重定位工作，不像静态文件一样直接转到main函数开始执行；</li>
+<li>动态链接器工作完成后，转到main函数开始执行。</li>
+</ul>
+<blockquote>
+<p>编译，一般就是把源文件转化成一个一个的二进制的目标文件。会留下一些坑，就是一些使用的其他文件的里的函数和变量会暂时不明确具体访问地址，留给下一步解决。<br>链接，填编译阶段留下的坑，把没有确定访问地址变量函数都一个个设置好，然后把所有输入的目标文件按照一定格式组成输出文件，一般就是可执行文件或者库文件，可执行文件不说，库文件就是打包好的目标文件，给别人用的。<br>.h，实际上就是普通文件，特殊的后缀名而已，你自己用什么后缀名无所谓，和.c没什么区别，include动作，实际上就是可以理解为copy过来，你也可以include .c啊。<br>.o ，编译产生的目标文件，有一定格式的二进制文件，除了除了头信息，debug信息之外，仔细观察，实际上就是平台的机器码。<br>.dll，动态库，库文件，可以理解里面是具体的函数二进制打包，给其他可执行程序用的，好像，也有自己就能运行的。动态就是编译的时候只指定lib路径和声明就行，不会实际组成可执行文件，实际运行的时候操作系统会load这些动态库，给可执行程序使用。对应的是静态库，链接的时候就组成到可执行文件里，一般后缀.a，不用load.</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">c++ 知识</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/14/2018-5-14/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-include &lt;exception&gt;" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -675,129 +798,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/01/18/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2018-5-14" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/18/2018-5-14/">编译与链接理解</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/18/2018-5-14/" class="archive-article-date">
-  	<time datetime="2018-01-17T16:09:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="编译器上的build命令其实干了四件事："><a href="#编译器上的build命令其实干了四件事：" class="headerlink" title="编译器上的build命令其实干了四件事："></a>编译器上的build命令其实干了四件事：</h3><ul>
-<li>预处理 （文本文件-&gt;文件文件）</li>
-<li>编译 （文本文件-&gt;文本文件）</li>
-<li>汇编 （文本文件-&gt;二进制文件）</li>
-<li>链接</li>
-</ul>
-<blockquote>
-<p>文本文件：数字、字母等都用指定编码如ASCII码/UNICODE码等方式编码并存储的==二进制文==件。<br>二进制文件：编码格式==自由==的二进制文件。</p>
-</blockquote>
-<ul>
-<li>每个.==cpp==文件是一个编译单元，.h文件不是，编译器对每个编译单元分别处理。</li>
-</ul>
-<h4 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h4><ul>
-<li>展开==宏定义==：#define #undef</li>
-<li>处理==预编译==指令：#if #ifdef #ifndef #elif #else #endif</li>
-<li>==递归==处理头文件：#include</li>
-<li>删除注释</li>
-<li>添加行号和文件名标识别，用于debug</li>
-</ul>
-<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><blockquote>
-<p>前端（平台无关）<br>词法分析：形象点说就是扫描器，将字符识别为有意义的记号：关键字、标识符、字面量（数字、字符串）、操作符等，顺便将标示符放到符号表，数字、字符串放到文字表等，链接阶段要用。<br>语法分析：对每个表达式构造语法树-操作符在父节点上，左右操作数在左右孩子上。<br>语义分析：语法对不代表这句话有意义，不过这阶段只能做静态语义分析，给每个语法树节点标上类型，静态类型检查、类型转换等都是在这个阶段完成。<br>看完数学之美会知道，自然语言处理已经放弃了语义分析这些传统方法，转而采用统计学方法，一大原因就是自然语言是上下文相关的，而人类发明的高级语言是上下文无关的。<br>源代码优化：将语法树用 三地址码（ x = y OP z）等格式表达，容易做优化，优化的代码包括常量相加之类。<br>后端（平台相关）<br>汇编语言生成：将中间代码转化为汇编指令。<br>汇编指令优化：比如用移位代替乘法等。</p>
-</blockquote>
-<h4 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h4><blockquote>
-<p>这项工作比较简单，将汇编指令转化为机器指令，参考汇编指令与机器指令对照表一对一翻译。<br>最终获得的文件称为==可重定位或共享目标文件==。</p>
-</blockquote>
-<h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><ul>
-<li>静态链接：==加载前==进行，各个编译单元生成可重定位目标文件（.a或者.obj）后，将它们组合成可执行文件。</li>
-<li>动态链接：==加载时==进行，对于共享目标文件（.so或者.dll），静态链接阶段不处理这些文件，只是在生成的可执行文件中添加.interp段、.dynamic和.dynsym等段，其中记录关于==动态链接器地址、依赖的共享目标文件与重定位信息和符号表==等信息。<blockquote>
-<p>注:加载的意思就是==创建进程，开始运行==之前</p>
-</blockquote>
-</li>
-</ul>
-<ul>
-<li>由于代码量的膨胀，需要分为不同==模块==进行开发，最后将互相依赖的模块组合，这是链接的目的。前文讲了静态链接，在程序加载之前生成一个可执行文件。但是静态链接也有明显的弊端：</li>
-<li>==浪费内存和磁盘空间==：任何一个可执行文件都需要拷贝使用到的目标文件。</li>
-<li>不利于程序的发布和更新：如果更新了程序，那么必须==重新获得可执行文件==。</li>
-<li>没有==插件功能==：不能够开放接口，将实现交给使用方自定义。</li>
-<li>兼容性较差：程序在不同平台运行时，不能动态选择依赖的链接库。</li>
-</ul>
-<blockquote>
-<p>动态链接的步骤：</p>
-</blockquote>
-<ul>
-<li>加载可执行文件和动态链接库到内存；</li>
-<li>将执行流程转到动态链接器（一段共享目标文件），其进行符号解析与重定位工作，不像静态文件一样直接转到main函数开始执行；</li>
-<li>动态链接器工作完成后，转到main函数开始执行。</li>
-</ul>
-<blockquote>
-<p>编译，一般就是把源文件转化成一个一个的二进制的目标文件。会留下一些坑，就是一些使用的其他文件的里的函数和变量会暂时不明确具体访问地址，留给下一步解决。<br>链接，填编译阶段留下的坑，把没有确定访问地址变量函数都一个个设置好，然后把所有输入的目标文件按照一定格式组成输出文件，一般就是可执行文件或者库文件，可执行文件不说，库文件就是打包好的目标文件，给别人用的。<br>.h，实际上就是普通文件，特殊的后缀名而已，你自己用什么后缀名无所谓，和.c没什么区别，include动作，实际上就是可以理解为copy过来，你也可以include .c啊。<br>.o ，编译产生的目标文件，有一定格式的二进制文件，除了除了头信息，debug信息之外，仔细观察，实际上就是平台的机器码。<br>.dll，动态库，库文件，可以理解里面是具体的函数二进制打包，给其他可执行程序用的，好像，也有自己就能运行的。动态就是编译的时候只指定lib路径和声明就行，不会实际组成可执行文件，实际运行的时候操作系统会load这些动态库，给可执行程序使用。对应的是静态库，链接的时候就组成到可执行文件里，一般后缀.a，不用load.</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">c++</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/18/2018-5-14/">展开全文 >></a>
         </p>
       
 
