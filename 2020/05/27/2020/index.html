@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>归并排序 | zhc24</title>
+  <title>2020 | zhc24</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。 归并排序分为两步，第一步是将待排序的数分成两部分，将两部分分别有序，再将两个有序的部分合并。 首先考虑下如何将将二个有序数列合并。这个非常简单，只要从比较二个数列的第一个数，谁小就先取谁，取了后就在对应数列中删除这个数。然后再进行比较，如果有数列为空，那直接将另一个数">
-<meta name="keywords" content="算法">
+  <meta name="description" content="2020">
 <meta property="og:type" content="article">
-<meta property="og:title" content="归并排序">
-<meta property="og:url" content="http://yoursite.com/2018/05/14/归并排序/index.html">
+<meta property="og:title" content="2020">
+<meta property="og:url" content="http://yoursite.com/2020/05/27/2020/index.html">
 <meta property="og:site_name" content="zhc24">
-<meta property="og:description" content="归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。 归并排序分为两步，第一步是将待排序的数分成两部分，将两部分分别有序，再将两个有序的部分合并。 首先考虑下如何将将二个有序数列合并。这个非常简单，只要从比较二个数列的第一个数，谁小就先取谁，取了后就在对应数列中删除这个数。然后再进行比较，如果有数列为空，那直接将另一个数">
-<meta property="og:updated_time" content="2020-05-26T19:15:09.582Z">
+<meta property="og:description" content="2020">
+<meta property="og:image" content="http://yoursite.com/pic/sm3Ub_IJKQg.jpg">
+<meta property="og:updated_time" content="2020-05-26T19:20:32.999Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="归并排序">
-<meta name="twitter:description" content="归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。 归并排序分为两步，第一步是将待排序的数分成两部分，将两部分分别有序，再将两个有序的部分合并。 首先考虑下如何将将二个有序数列合并。这个非常简单，只要从比较二个数列的第一个数，谁小就先取谁，取了后就在对应数列中删除这个数。然后再进行比较，如果有数列为空，那直接将另一个数">
+<meta name="twitter:title" content="2020">
+<meta name="twitter:description" content="2020">
+<meta name="twitter:image" content="http://yoursite.com/pic/sm3Ub_IJKQg.jpg">
   
     <link rel="alternative" href="/atom.xml" title="zhc24" type="application/atom+xml">
   
@@ -154,47 +155,27 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-归并排序" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2020" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      归并排序
+      2020
     </h1>
   
 
         
-        <a href="/2018/05/14/归并排序/" class="archive-article-date">
-  	<time datetime="2018-05-14T08:44:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-14</time>
+        <a href="/2020/05/27/2020/" class="archive-article-date">
+  	<time datetime="2020-05-26T19:19:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。</li>
-<li>归并排序分为两步，第一步是将待排序的数分成两部分，将两部分分别有序，再将两个有序的部分合并。<blockquote>
-<p>首先考虑下如何将将二个有序数列合并。这个非常简单，只要从比较二个数列的第一个数，谁小就先取谁，取了后就在对应数列中删除这个数。然后再进行比较，如果有数列为空，那直接将另一个数列的数据依次取出即可。</p>
-</blockquote>
-</li>
-<li>将两个有序数列==合并==的时间复杂度为==o(n)==</li>
-<li>归并排序，其的基本思路就是将数组分成二组A，B，如果这二组组内的数据都是有序的，那么就可以很方便的将这二组数据进行排序。如何让这二组组内数据有序了？</li>
-<li>可以将A，B组各自再分成二组。依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后再合并相邻的二个小组就可以了。这样通过先==递归的分解数列，再合并数列==就完成了归并排序。<blockquote>
-<p>归并排序的效率是比较高的，设数列长为N，将数列分开成小数列一共要==logN步==，每步都是一个合并有序数列的过程，时间复杂度可以记为O(N)，故一共为==O(N<em>logN)==。因为归并排序每次都是在相邻的数据中进行操作，所以归并排序在O(N</em>logN)的几种排序方法（快速排序，归并排序，希尔排序，堆排序）也是==效率比较高==的。</p>
-</blockquote>
-</li>
-<li>快速排序更适用于数组，归并排序更适用于链表。<h3 id="单链表的归并排序"><a href="#单链表的归并排序" class="headerlink" title="单链表的归并排序"></a>单链表的归并排序</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">sortList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!head||!head-&gt;next) <span class="keyword">return</span> head;</span><br><span class="line">        ListNode* mid = findmid(head);</span><br><span class="line">        ListNode* head1 = sortList(head);<span class="comment">//递归二分链表</span></span><br><span class="line">        ListNode* head2 = sortList(mid);</span><br><span class="line">        <span class="keyword">return</span> merge(head1,head2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">ListNode* <span class="title">findmid</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        ListNode* fast = head,*slow = head,*pre = head;</span><br><span class="line">        <span class="keyword">while</span>(fast) &#123;</span><br><span class="line">            pre = slow;</span><br><span class="line">            slow = slow-&gt;next;</span><br><span class="line">            fast = fast-&gt;next?fast-&gt;next-&gt;next:<span class="literal">nullptr</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pre-&gt;next = <span class="literal">nullptr</span>;<span class="comment">//需要截断链表彻底一分为2</span></span><br><span class="line">        <span class="keyword">return</span> slow;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">ListNode* <span class="title">merge</span><span class="params">(ListNode* head1,ListNode* head2)</span> </span>&#123;</span><br><span class="line">        ListNode* cur1 = head1,*cur2 = head2,* newhead = <span class="keyword">new</span> ListNode(<span class="number">0</span>),*cur = newhead;</span><br><span class="line">        <span class="keyword">while</span>(cur1&amp;&amp;cur2) &#123;</span><br><span class="line">            <span class="keyword">if</span>(cur1-&gt;val&lt;=cur2-&gt;val) &#123;</span><br><span class="line">                cur-&gt;next = cur1;</span><br><span class="line">                cur1 = cur1-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                cur-&gt;next = cur2;</span><br><span class="line">                cur2 = cur2-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            cur = cur-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        cur-&gt;next = cur1?cur1:cur2;</span><br><span class="line">        <span class="keyword">return</span> newhead-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h3 id="切记不要返回局部变量的引用和指针"><a href="#切记不要返回局部变量的引用和指针" class="headerlink" title="切记不要返回局部变量的引用和指针"></a>切记不要返回局部变量的引用和指针</h3><ul>
-<li>c/c++严禁返回局部变量的指针或引用。</li>
-<li>g++ 和vs编译器 对于这个操作是会有不同的处理 </li>
-<li>vs 不允许读取已经释放的内存空间的内容</li>
-<li>delete 一个指针之后这个指针的值不会变成nullptr 只是将对应的空间标示为可以被其他程序使用<br>-数组当中的归并排序<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"MergeSort.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> MergeSort::solution(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">    <span class="keyword">if</span> (nums.size() &lt; <span class="number">2</span>) <span class="keyword">return</span>;</span><br><span class="line">    nums = mergesort(<span class="number">0</span>, nums.size() - <span class="number">1</span>, nums);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; MergeSort::mergesort(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">    <span class="keyword">if</span> (l == r) &#123;</span><br><span class="line">        temp.push_back(nums[l]);</span><br><span class="line">        <span class="keyword">return</span> temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (l + <span class="number">1</span> == r) &#123;</span><br><span class="line">        <span class="keyword">if</span> (nums[l] &lt; nums[r]) &#123;</span><br><span class="line">            temp.push_back(nums[l]);</span><br><span class="line">            temp.push_back(nums[r]);</span><br><span class="line">            <span class="keyword">return</span> temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            temp.push_back(nums[r]);</span><br><span class="line">            temp.push_back(nums[l]);</span><br><span class="line">            <span class="keyword">return</span> temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1 = mergesort(l, mid - <span class="number">1</span>, nums);</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2 = mergesort(mid, r,nums);</span><br><span class="line">    temp =  merge(v1, v2);</span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; MergeSort::merge(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; v1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; v2) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!v1.size()) <span class="keyword">return</span> v2;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (!v2.size()) <span class="keyword">return</span> v1;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;res;</span><br><span class="line">    <span class="keyword">int</span> n = v1.size(), m = v2.size(), i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; n &amp;&amp; j &lt; m) &#123;</span><br><span class="line">        <span class="keyword">if</span> (v1[i] &lt; v2[j]) &#123;</span><br><span class="line">            res.push_back(v1[i]);</span><br><span class="line">            ++i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            res.push_back(v2[j]);</span><br><span class="line">            ++j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (; i &lt; n; ++i) &#123;</span><br><span class="line">        res.push_back(v1[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (; j &lt; m; ++j) &#123;</span><br><span class="line">        res.push_back(v2[j]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
+        <h2 id="2020"><a href="#2020" class="headerlink" title="2020"></a>2020</h2><p><img src="/pic/sm3Ub_IJKQg.jpg"></p>
 
       
 
@@ -224,17 +205,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -285,7 +255,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/05/14/归并排序/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/27/2020/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -299,18 +269,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/27/2020/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          2020
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/05/14/2018-5-14-2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">快速排序</div>
+    <a href="/2018/05/14/归并排序/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">归并排序</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -338,7 +299,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="归并排序" data-title="归并排序" data-url="http://yoursite.com/2018/05/14/归并排序/"></div>
+	<div class="ds-thread" data-thread-key="2020" data-title="2020" data-url="http://yoursite.com/2020/05/27/2020/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -360,7 +321,7 @@
   
 
   
-  <div id="SOHUCS" sid="归并排序" ></div> 
+  <div id="SOHUCS" sid="2020" ></div> 
 <script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
     window.changyan.api.config({
